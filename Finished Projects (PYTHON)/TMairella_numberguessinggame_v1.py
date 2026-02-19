@@ -1,3 +1,7 @@
+# Thomas Mairella
+# Number Guessing Game
+# 2/22/26
+
 import random
 
 play_again = "yes"
