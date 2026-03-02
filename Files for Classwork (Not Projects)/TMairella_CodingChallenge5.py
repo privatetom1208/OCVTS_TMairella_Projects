@@ -8,17 +8,14 @@ student_set = set(students)
 
 #3. Store student names and grades in a dictionary
 student_grades = {
-    "Aaron": 50,
-    "Pablo": 88,
-    "Sam": 100,
-    "Brendan": 90,
-    "Daivion": 93
+    "name": ["Aaron", "Pablo", "Sam", "Brendan", "Ivan"],
+    "grade": [50, 88, 100, 90, 93]
 }
 
 #4. Print all students with grades above 70
-for student, grade in student_grades.items():
-    if grade > 70:
-        print(student)
+for i in range(len(student_grades["name"])):
+    if student_grades["grade"][i] > 70:
+        print(student_grades["name"][i])
 
 # Q&A:
 #1. Difference between list and tuple?
