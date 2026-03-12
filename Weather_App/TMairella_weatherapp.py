@@ -1,9 +1,12 @@
+# Import libraries
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 
+# Read the CSV file into a DataFrame
 df = pd.read_csv("Weather_App\\WeatherStationData.csv")
 
+# Functions
 def add_station():
     station = input("Enter the station name: ")
     location = input("Enter the location: ")
@@ -78,12 +81,52 @@ def weather_analysis():
     print(f"Minimum Wind Speed: {min_wind:.2f} mph")
     print(f"Maximum Wind Speed: {max_wind:.2f} mph")
 
+def compare_stations():
+    station1 = int(input("Enter the first station number to compare (starting from 0): "))
+    station2 = int(input("Enter the second station number to compare (starting from 0): "))
+
+    if station1 < 0 or station1 >= len(df) or station2 < 0 or station2 >= len(df):
+        print("Invalid station numbers.")
+        return 
+
+    print(f"Comparing Station {station1} and Station {station2}:")
+    print(df.iloc[station1])
+    print(df.iloc[station2])
+
+def graph_weather():
+    type = input("What type of graph would you like to see? (Temperature, Humidity, Wind, etc.): ").lower()
+    if type == "temperature":
+        plt.plot(df["Date"], df["Temperature Highest"], label="Temperature Highest")
+        plt.plot(df["Date"], df["Temperature Lowest"], label="Temperature Lowest")
+        plt.xlabel("Date")
+        plt.ylabel("Temperature")
+        plt.title("Temperature Over Time")
+        plt.legend()
+        plt.show()
+    elif type == "humidity":
+        plt.bar(df["Date"], df["Humidity (%)"])
+        plt.xlabel("Date")
+        plt.ylabel("Humidity (%)")
+        plt.title("Humidity Over Time")
+        plt.show()
+    elif type == "wind":
+        plt.bar(df["Date"], df["Wind in mph"])
+        plt.xlabel("Date")
+        plt.ylabel("Wind Speed (mph)")
+        plt.title("Wind Speed Over Time")
+        plt.show()
+    else:
+        print("Invalid graph type.")
+
+# Main Menu
 print("Menu Choices:")
 print("1. Add a new station")
 print("2. Edit an existing station")
 print("3. View all stations")
 print("4. Weather Analysis")
-print("5. Exit")
+print("5. Compare Stations")
+print("6. Graph Weather Data")
+print("7. Exit")
 
 choice = input("\nEnter your choice: ")
 match choice:
@@ -97,4 +140,10 @@ match choice:
     case "4":
         weather_analysis()
     case "5":
+        print(df)
+        compare_stations()
+    case "6":
+        print(df)
+        graph_weather()
+    case "7":
         print("Exiting the program.")
