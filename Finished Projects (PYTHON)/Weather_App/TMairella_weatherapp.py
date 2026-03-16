@@ -1,3 +1,7 @@
+# Thomas Mairella
+# Rock Paper Scissors Game
+# 3/8/26
+
 # Import libraries
 import numpy as np
 import matplotlib.pyplot as plt
