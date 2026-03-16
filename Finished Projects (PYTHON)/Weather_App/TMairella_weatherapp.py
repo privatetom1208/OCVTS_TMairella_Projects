@@ -1,6 +1,6 @@
 # Thomas Mairella
-# Rock Paper Scissors Game
-# 3/8/26
+# Weather App
+# 3/22/26
 
 # Import libraries
 import numpy as np
@@ -8,19 +8,48 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 # Read the CSV file into a DataFrame
-df = pd.read_csv("Weather_App\\WeatherStationData.csv")
+df = pd.read_csv("Finished Projects (PYTHON)\\Weather_App\\WeatherStationData.csv")
 
 # Functions
 def add_station():
     station = input("Enter the station name: ")
     location = input("Enter the location: ")
+
     date = input("Enter the date (YYYY-MM-DD): ")
+    try:
+        if (len(date) != 10):
+            raise ValueError
+    except ValueError:
+        print("Error: Date must be in YYYY-MM-DD format.")
+        return
+
     time_start = input("Enter the start time (HH:MM): ")
     time_end = input("Enter the end time (HH:MM): ")
-    temp_highest = float(input("Enter the highest temperature: "))
-    temp_lowest = float(input("Enter the lowest temperature: "))
-    humidity = float(input("Enter the humidity (%): "))
-    wind_mph = float(input("Enter the wind speed in mph: "))
+
+    try:
+        temp_highest = int(input("Enter the highest temperature: "))
+    except ValueError:
+        print("Error: Please enter a valid number for the highest temperature.")
+        return
+
+    try:
+        temp_lowest = int(input("Enter the lowest temperature: "))
+    except ValueError:
+        print("Error: Please enter a valid number for the lowest temperature.")
+        return
+
+    try:
+        humidity = int(input("Enter the humidity (%): "))
+    except ValueError:
+        print("Error: Please enter a valid number for humidity.")
+        return
+
+    try:
+        wind_mph = int(input("Enter the wind speed in mph: "))
+    except ValueError:
+        print("Error: Please enter a valid number for wind speed.")
+        return
+
     weather = input("Enter the weather description: ")
 
     new_station = {
@@ -41,20 +70,54 @@ def add_station():
     print("New station added successfully!")
 
 def edit_station():
-    station_number = int(input("Enter the station number to edit (starting from 0): "))
+    try:
+        station_number = int(input("Enter the station number to edit (starting from 0): "))
+    except ValueError:
+        print("Error: Station number must be an integer.")
+        return
+
     if station_number < 0 or station_number >= len(df):
         print("Invalid station number.")
         return 
     
     station = input("Enter the new station name: ")
     location = input("Enter the new location: ")
+
     date = input("Enter the new date (YYYY-MM-DD): ")
+    try:
+        if (len(date) != 10):
+            raise ValueError
+    except ValueError:
+        print("Error: Date must be in YYYY-MM-DD format.")
+        return
+
     time_start = input("Enter the new start time (HH:MM): ")
     time_end = input("Enter the new end time (HH:MM): ")
-    temp_highest = float(input("Enter the new highest temperature: "))
-    temp_lowest = float(input("Enter the new lowest temperature: "))
-    humidity = float(input("Enter the new humidity (%): "))
-    wind_mph = float(input("Enter the new wind speed in mph: "))
+
+    try:
+        temp_highest = int(input("Enter the new highest temperature: "))
+    except ValueError:
+        print("Error: Please enter a valid number for the highest temperature.")
+        return
+
+    try:
+        temp_lowest = int(input("Enter the new lowest temperature: "))
+    except ValueError:
+        print("Error: Please enter a valid number for the lowest temperature.")
+        return
+
+    try:
+        humidity = int(input("Enter the new humidity (%): "))
+    except ValueError:
+        print("Error: Please enter a valid number for humidity.")
+        return
+
+    try:
+        wind_mph = int(input("Enter the new wind speed in mph: "))
+    except ValueError:
+        print("Error: Please enter a valid number for wind speed.")
+        return
+
     weather = input("Enter the new weather description: ") 
 
     df.iloc[station_number] = [station, location, date, time_start, time_end, temp_highest, temp_lowest, humidity, wind_mph, weather]
@@ -86,8 +149,12 @@ def weather_analysis():
     print(f"Maximum Wind Speed: {max_wind:.2f} mph")
 
 def compare_stations():
-    station1 = int(input("Enter the first station number to compare (starting from 0): "))
-    station2 = int(input("Enter the second station number to compare (starting from 0): "))
+    try:
+        station1 = int(input("Enter the first station number to compare (starting from 0): "))
+        station2 = int(input("Enter the second station number to compare (starting from 0): "))
+    except ValueError:
+        print("Error: Station numbers must be integers.")
+        return
 
     if station1 < 0 or station1 >= len(df) or station2 < 0 or station2 >= len(df):
         print("Invalid station numbers.")
@@ -98,7 +165,7 @@ def compare_stations():
     print(df.iloc[station2])
 
 def graph_weather():
-    type = input("What type of graph would you like to see? (Temperature, Humidity, Wind, etc.): ").lower()
+    type = input("What type of graph would you like to see? (Temperature, Humidity, Wind, Temperature vs Humidity, Temperature vs Wind, Humidity vs Wind, etc.): ").lower()
     if type == "temperature":
         plt.plot(df["Date"], df["Temperature Highest"], label="Temperature Highest")
         plt.plot(df["Date"], df["Temperature Lowest"], label="Temperature Lowest")
@@ -118,6 +185,24 @@ def graph_weather():
         plt.xlabel("Date")
         plt.ylabel("Wind Speed (mph)")
         plt.title("Wind Speed Over Time")
+        plt.show()
+    elif type == "temperature vs humidity":
+        plt.scatter(df["Temperature Highest"], df["Humidity (%)"])
+        plt.xlabel("Temperature Highest")
+        plt.ylabel("Humidity (%)")
+        plt.title("Temperature vs Humidity")
+        plt.show()
+    elif type == "temperature vs wind":
+        plt.scatter(df["Temperature Highest"], df["Wind in mph"])
+        plt.xlabel("Temperature Highest")
+        plt.ylabel("Wind Speed (mph)")
+        plt.title("Temperature vs Wind Speed")
+        plt.show()
+    elif type == "humidity vs wind":
+        plt.scatter(df["Humidity (%)"], df["Wind in mph"])
+        plt.xlabel("Humidity (%)")
+        plt.ylabel("Wind Speed (mph)")
+        plt.title("Humidity vs Wind Speed")
         plt.show()
     else:
         print("Invalid graph type.")
