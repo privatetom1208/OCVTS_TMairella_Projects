@@ -3,12 +3,11 @@
 # 3/22/26
 
 # Import libraries
-import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 
 # Read the CSV file into a DataFrame
-df = pd.read_csv("Weather_App\\WeatherStationData.csv")
+df = pd.read_csv("Finished Projects (PYTHON)\\Weather_App\\WeatherStationData.csv")
 
 # Functions
 def add_station():
@@ -68,7 +67,7 @@ def add_station():
     }
 
     df.loc[len(df)] = new_station
-    df.to_csv("Weather_App\\WeatherStationData.csv", index=False)
+    df.to_csv("Finished Projects (PYTHON)\\Weather_App\\WeatherStationData.csv", index=False)
     print("New station added successfully!")
 
 def edit_station():
@@ -126,7 +125,7 @@ def edit_station():
         print("Station and date not found.")
         return
 
-    df.to_csv("Weather_App\\WeatherStationData.csv", index=False)
+    df.to_csv("Finished Projects (PYTHON)\\Weather_App\\WeatherStationData.csv", index=False)
     print("Station edited successfully!")
 
 def weather_analysis():
