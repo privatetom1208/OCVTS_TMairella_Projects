@@ -7,7 +7,8 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 # Read the CSV file into a DataFrame
-df = pd.read_csv("Finished Projects (PYTHON)\\Weather_App\\WeatherStationData.csv")
+file_path = "Finished Projects (PYTHON)\\Weather_App\\WeatherStationData.csv"
+df = pd.read_csv(file_path)
 
 # Functions
 def add_station():
@@ -67,7 +68,7 @@ def add_station():
     }
 
     df.loc[len(df)] = new_station
-    df.to_csv("Finished Projects (PYTHON)\\Weather_App\\WeatherStationData.csv", index=False)
+    df.to_csv(file_path, index=False)
     print("New station added successfully!")
 
 def edit_station():
@@ -125,7 +126,7 @@ def edit_station():
         print("Station and date not found.")
         return
 
-    df.to_csv("Finished Projects (PYTHON)\\Weather_App\\WeatherStationData.csv", index=False)
+    df.to_csv(file_path, index=False)
     print("Station edited successfully!")
 
 def weather_analysis():
