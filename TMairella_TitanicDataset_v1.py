@@ -35,6 +35,16 @@ print(df.head())
 
 print(" - - - - - - - - - - - - - - - - - - ")
 
+
+
+
+
+
+
+
+
+
+
 """# **PROJECT REQUIRMENTS**
 *   Use the Titanic dataset (train.csv)
 *   Handle missing values (Age, Cabin, Embarked)
@@ -108,41 +118,5 @@ Build a Logistic Regression model to predict survival.
 
 # Question 10: CODE HERE
 
-"""# **⭐ BONUS ROUND (OPTIONAL)**
 
-## **Extra Credit (Choose One): (⭐ + 1 )**
 
-**ADDITIONAL EXPLORATION QUESTIONS (OPTIONAL): ( ⭐+1 )**
-
-*   Question 11: Were 1st class passengers more likely to survive than 3rd class?
-*   Question 12: Were females more likely to survive than males?
-*   Question 13: Did traveling alone vs with family impact survival?
-*   Question 14: Who was the youngest and oldest passenger? Did they survive?
-*   Question 15: What is the fare distribution across classes?
-"""
-
-# Question 11: CODE HERE
-
-# Question 12: CODE HERE
-
-# Question 13: CODE HERE
-
-# Question 14: CODE HERE
-
-# Question 15: CODE HERE
-
-"""## **Extra Credit (Choose One): (⭐ + 2 )**
-
-*   Create multiple visualizations using matplotlib or seaborn
-*   Create a “Would I Survive?” prediction function
-"""
-
-# CODE HERE
-
-"""## **Extra Credit (Choose One): (⭐ + 4 )**
-
-*   Build a more advanced model (Random Forest / Decision Tree)
-*   Perform feature engineering (FamilySize, Title extraction)
-"""
-
-# CODE HERE
