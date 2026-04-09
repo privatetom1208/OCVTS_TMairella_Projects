@@ -62,9 +62,13 @@ age_array = df['Age'].values  # convert pandas Series to NumPy array
 average_age = np.nanmean(age_array)  # compute mean while ignoring NaNs
 print(f"Average age of passengers: {average_age:.2f} years")
 
+# Question 1 Answer: The average age of passengers on the Titanic was approximately 29.70 years.
+
 # Question 2: Using NumPy, calculate survival rate (percentage) across the dataset.
 survival_rate = np.nanmean(df['Survived'].values) * 100  # mean of binary survival column gives proportion
 print(f"Survival rate: {survival_rate:.2f}%")
+
+# Question 2 Answer: The survival rate across the dataset was approximately 38.38%.
 
 # Question 3: Create a bar chart showing: Survivors vs Non-survivors
 non_survivors = df['Survived'].value_counts()[0]  # count of passengers who did not survive
@@ -88,6 +92,8 @@ class_survival_rate = df.groupby('Pclass')['Survived'].mean() * 100  # group by 
 print("Survival rate by class:")
 print(class_survival_rate.to_string())
 
+# Question 5 Answer: The survival rates by class were: Pclass 1: 62.96%, Pclass 2: 47.28%, Pclass 3: 24.24%
+
 # Question 5.5 (Extra Visualization to meet requirements): Visualize Survival by class
 class_survival_rate = df.groupby('Pclass')['Survived'].mean() * 100  # recompute survival rate by class
 
@@ -104,11 +110,12 @@ survived_children = children['Survived'].sum()  # number of surviving children
 print(f"Number of children on the Titanic: {num_children}")
 print(f"Number of child survivors: {survived_children}")
 
-# Question 7: What characteristics (features) were most important in predicting survival?
+# Question 6 Answer: There were 113 children on the Titanic, and 61 of them survived.
+
+# Question 7: What characteristics (features) were most important in predicting survival? (Hint: Use feature importance from a model like RandomForest or coefficients)
 df_copy = df.copy()  # create a copy to avoid modifying original dataframe during modeling
 # (df_copy is used for modeling steps to keep df unchanged for earlier analysis)
 
-df_copy['Age'] = df_copy['Age'].fillna(df_copy['Age'].mean())  # ensure no missing values remain
 X = df_copy[['Pclass', 'Sex', 'Age']]  # select features
 y = df_copy['Survived']  # target variable
 
@@ -119,6 +126,8 @@ importance = pd.Series(model.feature_importances_, index=X.columns)  # extract f
 print("Feature Importance:")
 print(importance.sort_values(ascending=False).to_string())
 
+# Question 7 Answer: The most important features for predicting survival were Age (0.43), Sex (0.40), and Pclass (0.17), with Age being the most influential, followed by Sex and then Pclass.
+
 # Question 8: Use K-Means clustering to group passengers into 3 clusters. What patterns do you observe?
 kmeans = KMeans(n_clusters=3, random_state=42)  # define number of clusters
 kmeans.fit(X)  # fit clustering model on same features
@@ -128,6 +137,8 @@ df_copy['Cluster'] = kmeans.labels_  # assign cluster labels back to df_copy
 print("Cluster centers:")
 for i, center in enumerate(kmeans.cluster_centers_):
     print(f"Cluster {i}: Pclass={center[0]:.2f}, Sex={center[1]:.2f}, Age={center[2]:.2f}")
+
+# Question 8 Answer: The K-Means clustering grouped passengers into 3 clusters based on their class, gender, and age. Cluster 0 consisted of younger, lower-class passengers that were mostly male. Cluster 1 included older, higher-class male passengers. Cluster 2 contained middle-aged, lower-class passengers that were predominantly male.
 
 # Question 9: What trends do you notice? Run a Linear Regression to predict Fare based on: Class, Age, and Family size.
 df_copy['FamilySize'] = df_copy['SibSp'] + df_copy['Parch'] + 1  # create new feature representing family size
@@ -142,11 +153,13 @@ model_fare.fit(X_fare, y_fare)  # train model
 r2 = model_fare.score(X_fare, y_fare)  # compute R^2 score
 print(f"Fare Price Prediction: {r2:.4f}")
 
+# Question 9 Answer: The R^2 score for the linear regression model predicting Fare based on Class, Age, and Family Size was approximately 0.37, indicating that these features explain about 37% of the variance in Fare prices.
+
 # Question 10: Build a Logistic Regression model to predict survival. What is the model accuracy? Which variables increase survival probability?
 X_logistic = df_copy[['Pclass', 'Sex', 'Age', 'FamilySize']]  # selected features
 y_logistic = df_copy['Survived']  # target variable
 
-model_logistic = LogisticRegression(random_state=42)  # initialize logistic regression model
+model_logistic = LogisticRegression(max_iter=1000, random_state=42)  # initialize logistic regression model
 
 # split dataset into training and testing sets
 X_train, X_test, y_train, y_test = train_test_split(X_logistic, y_logistic, test_size=0.2, random_state=42)
@@ -160,3 +173,5 @@ print("Logistic Regression Coefficients:")
 # interpret coefficients for each feature
 for feature, coef in zip(X_logistic.columns, model_logistic.coef_[0]):
     print(f"{feature}: {coef:.2f}")
+
+# Question 10 Answer: The logistic regression model achieved an accuracy of approximately 0.82 on the test set. The coefficients indicate that being female (Sex) and having a smaller family size (FamilySize) increase the probability of survival, while being in a higher passenger class (Pclass) and being older (Age) decrease the probability of survival.
